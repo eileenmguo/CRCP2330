@@ -10,8 +10,10 @@ class Assembler
 	end
 
 	def assemble!
-		# hack_instructions = @parser.parse_asm
-		# @hack_file << hack_instructions
+		hack_instructions = @parser.parse
+		hack_instructions.each do |instruction|
+			@hack_file << instruction << "\n"
+		end
 	end
 
 	def instructions_from_file
@@ -21,6 +23,7 @@ class Assembler
 		return lines
 	end
 end
+
 
 def args_valid?
 	ARGV[0] && ARGV[0].end_with?(".asm") && ARGV.length == 1
@@ -35,6 +38,7 @@ def hack_filename(asm_filename)
 	path = File.split(asm_filename)[0]
 	"#{path}/#{asm_basename}.hack"
 end
+
 
 
 unless args_valid?
