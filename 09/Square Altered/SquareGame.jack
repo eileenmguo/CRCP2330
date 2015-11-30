@@ -22,10 +22,26 @@ class SquareGame {
 
     /** Constructs a new Square Game. */
     constructor SquareGame new() {
+        do drawBackground();
         let square = Square.new(8, 8, 16);
         let direction = 0;
 
         return this;
+    }
+
+    method void drawBackground() {
+        var int row, column;
+        do Screen.setColor(true);
+        let row = 16;
+        while (row < 256) {
+            let column = 16;
+            while (column < 512) {
+                do Screen.drawCircle(column, row, 4);
+                let column = column + 16;
+            }
+            let row = row + 16;
+        }
+        return;
     }
 
     /** Deallocates the object's memory. */
