@@ -63,9 +63,11 @@ class SquareGame {
         let exit = false;
         do Output.moveCursor(0,0);
         while (~exit & (moves > 0)) {
-            do Output.printString(" Moves Left: ");
-            do Output.printInt(moves);
+            do Output.backSpace();
             do Output.moveCursor(0,0);
+            do Output.printString("Moves Left: ");
+            do Output.printInt(moves);
+
 
             // waits for a key to be pressed.
             while (key = 0) {
@@ -103,6 +105,12 @@ class SquareGame {
 
             let moves = moves - 1;
         }
+        do Output.backSpace();
+        do Output.moveCursor(0,0);
+        do Output.printString("Moves Left: ");
+        do Output.printInt(moves);
+
+        
     
         return;
 	}
