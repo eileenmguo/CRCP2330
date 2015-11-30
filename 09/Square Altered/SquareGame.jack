@@ -56,12 +56,16 @@ class SquareGame {
     method void run() {
         var char key;
         var boolean exit;
+        var int time, pseudoSecond;
+
+
+        let time = 100;
+        let pseudoSecond = 0;
 
         let exit = false;
-
-        do Output.printString("Hello World");
-
-        while (~exit) {
+        while (~exit & (time > 0)) {
+            do Output.printInt(50);
+            do Output.moveCursor(0,0);
 
             // waits for a key to be pressed.
             while (key = 0) {
@@ -97,9 +101,7 @@ class SquareGame {
                 do moveSquare();
             }
         }
-
-        //
-            
+    
         return;
 	}
 
