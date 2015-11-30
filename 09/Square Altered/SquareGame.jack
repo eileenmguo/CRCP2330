@@ -108,9 +108,9 @@ class SquareGame {
         do Output.backSpace();
         do Output.moveCursor(0,0);
         do Output.printString("Moves Left: ");
-        do Output.printInt(moves);
+        do Output.printString("GAME OVERRR");
 
-        
+
     
         return;
 	}
