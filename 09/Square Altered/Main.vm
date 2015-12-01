@@ -1,41 +1,4 @@
-function Main.main 3
-push constant 0
-not
-call Screen.setColor 1
-pop temp 0
-push constant 16
-pop local 1
-label WHILE_EXP0
-push local 1
-push constant 256
-lt
-not
-if-goto WHILE_END0
-push constant 16
-pop local 2
-label WHILE_EXP1
-push local 2
-push constant 512
-lt
-not
-if-goto WHILE_END1
-push local 2
-push local 1
-push constant 4
-call Screen.drawCircle 3
-pop temp 0
-push local 2
-push constant 16
-add
-pop local 2
-goto WHILE_EXP1
-label WHILE_END1
-push local 1
-push constant 16
-add
-pop local 1
-goto WHILE_EXP0
-label WHILE_END0
+function Main.main 1
 call SquareGame.new 0
 pop local 0
 push local 0
