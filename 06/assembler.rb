@@ -10,17 +10,47 @@ class Assembler
 	end
 
 	def assemble!
-		@parser.parse.each { |instruction| @hack_file << instruction << "\n" }
+		#@parser.parse.each { |instruction| @hack_file << instruction << "\n" }
+		#puts instructions_from_file
 	end
 
 	def instructions_from_file
 		lines = @asm_file.readlines
 		lines.each { |line| line.gsub! /\/\/.*/, ''; line.strip! }
 		lines.delete("")
-		return lines
+
+		puts get_labels(lines)
+
+		# lines.each do |line|
+		# 	if line.include? '('
+		# 		line.gsub!(/\(.*\)/, '')
+		# 	elsif line.include? '@'
+		# 		line = labels[line[1,-1]])	
+		# 	end
+		# end
+		# lines.delete("")
+		
 	end
+
+	def get_labels(lines)
+		lineNum = 0
+		labels = Hash.new
+		lines.each do |line|
+			if line.include? '('
+				labels[line[1..-2]] = lineNum - labels.length
+			end
+			lineNum += 1
+		end
+		labels
+	end
+
 end
 
+
+
+#---------------------------------------------------------------------------------------------------------
+#                                                    File Check/Open 
+#---------------------------------------------------------------------------------------------------------
 
 def args_valid?
 	ARGV[0] && ARGV[0].end_with?(".asm") && ARGV.length == 1
@@ -35,8 +65,6 @@ def hack_filename(asm_filename)
 	path = File.split(asm_filename)[0]
 	"#{path}/#{asm_basename}.hack"
 end
-
-
 
 unless args_valid?
 	abort("Usage: ./assembler.rb Prog.asm")
