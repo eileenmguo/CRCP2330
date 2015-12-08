@@ -10,8 +10,7 @@ class Assembler
 	end
 
 	def assemble!
-		#@parser.parse.each { |instruction| @hack_file << instruction << "\n" }
-		#puts instructions_from_file
+		@parser.parse.each { |instruction| @hack_file << instruction << "\n" }
 	end
 
 	def instructions_from_file
@@ -19,25 +18,41 @@ class Assembler
 		lines.each { |line| line.gsub! /\/\/.*/, ''; line.strip! }
 		lines.delete("")
 
-		puts get_labels(lines)
-
-		# lines.each do |line|
-		# 	if line.include? '('
-		# 		line.gsub!(/\(.*\)/, '')
-		# 	elsif line.include? '@'
-		# 		line = labels[line[1,-1]])	
-		# 	end
-		# end
-		# lines.delete("")
-		
+		labels = get_labels(lines)
+		numVariables = 0
+		lines.each do |line|
+			if line.include? '('
+				line.gsub! /\(\w+\)/, ''
+			elsif line.include? '@'
+				if line.match(/R[\d]+/)
+					line.gsub!(/R[\d]+/, line[2..-1])
+				elsif labels.has_key? line[1..-1]
+					line.gsub!(line[1..-1], labels[line[1..-1]].to_s)
+				else 
+					labels[line[1..-1]] = 16 + numVariables
+				end 
+			end
+		end
+		lines.delete('')
+		lines	
 	end
 
 	def get_labels(lines)
+		labels = {
+			'SP' => 0, 
+			'LCL' => 1,
+			'ARG' => 2,
+			'THIS' => 3,
+			'THAT' => 4,
+			'SCREEN' => 16384,
+			'KBD' => 24576
+		}
 		lineNum = 0
-		labels = Hash.new
+		numLabels = 0
 		lines.each do |line|
 			if line.include? '('
-				labels[line[1..-2]] = lineNum - labels.length
+				labels[line[1..-2]] = lineNum - numLabels
+				numLabels += 1
 			end
 			lineNum += 1
 		end
