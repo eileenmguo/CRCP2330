@@ -22,7 +22,7 @@ class Assembler
 		numVariables = 0
 		lines.each do |line|
 			if line.include? '('
-				line.gsub! /\(\w+\)/, ''
+				line.gsub! /.+/, ''
 			elsif line.include? '@'
 				if line.match(/R[\d]{1,2}/)
 					line.gsub! /R[\d]+/, line[2..-1]
