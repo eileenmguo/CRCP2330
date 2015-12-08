@@ -30,6 +30,8 @@ class Assembler
 					line.gsub! line[1..-1], labels[line[1..-1]].to_s
 				elsif not line.match(/@\d+/)
 					labels[line[1..-1]] = 16 + numVariables
+					line.gsub! line[1..-1], labels[line[1..-1]].to_s
+					numVariables += 1
 				end 
 			end
 		end
